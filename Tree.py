@@ -1,8 +1,9 @@
 class BinaryTree:
     class _Node:
-        def __init__(self, element, parent=None, left=None, right=None):
-            self._element = element
+        def __init__(self, label, quality, parent=None, left=None, right=None):
+            self._label = label
             self._parent = parent
+            self._quality = quality
             self._left = left
             self._right = right
             
@@ -13,19 +14,19 @@ class BinaryTree:
     def is_empty(self):
         return self._size == 0
     
-    def add_root(self, e):
+    def add_root(self, l, q):
         self._size += 1
-        t = self._root = self._Node(e)
+        t = self._root = self._Node(l, q)
         return t
         
-    def add_left(self, p, e):
+    def add_left(self, p, l, q):
         self._size += 1
-        t = p._left = self._Node(e, p)         # t is current node and p is parent node
+        t = p._left = self._Node(l, q, p)         # t is current node and p is parent node
         return t
        
-    def add_right(self, p, e):
+    def add_right(self, p, l, q):
         self._size +=1
-        t = p._right = self._Node(e, p)
+        t = p._right = self._Node(l, q, p)
         return t
     
     def __len__(self):
@@ -48,28 +49,30 @@ class BinaryTree:
                 t = p._parent._left
         return t
     
-    def insert(root, value, letter):
-    if root is None:
-        return Node(value, letter)
-    else:
-        if  value < root.value:
-            root.left = insert(root.left, value, letter)
+    def insert(self, p, l, q):
+        if p is None:
+            return self._Node(l, q)
         else:
-            root.right = insert(root.right, value, letter)
-        return root
+            if  l < p._label:
+                p._left = self.insert(p._left, l, q)
+            else:
+                p._right = self.insert(p._right, l, q)
+            return p
 
 def inorderTraversal(root):
     res = []
     if root:
         res = inorderTraversal(root._left)
-        res.append(root._element)
+        res.append(root._label)
+        res.append(root._quality)
         res = res + inorderTraversal(root._right)
     return res
 
 def preorderTraversal(root):
     res = []
     if root:
-        res.append(root._element)
+        res.append(root._label)
+        res.append(root._quality)
         res = res + preorderTraversal(root._left)
         res = res + preorderTraversal(root._right)
     return res
@@ -79,5 +82,6 @@ def postorderTraversal(root):
     if root:
         res = preorderTraversal(root._left)
         res = res + preorderTraversal(root._right)
-        res.append(root._element)
+        res.append(root._label)
+        res.append(root._quality)
     return res
