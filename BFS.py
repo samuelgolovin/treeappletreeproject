@@ -111,7 +111,7 @@ class Worker():
     def appleToBasket(self, current_tree):
         # pickedApple = current_tree.pick_apple(current_tree)
         self.basketORwagon.basketstack.push(current_tree.pick_apple(current_tree))
-        print(f"--->\t{self.name} put apple in basket from tree")
+        # print(f"--->\t{self.name} put apple in basket from tree")
     
     def basketToWagon(self):
         for i in range(self.basketORwagon.basketstack.get_size()):
