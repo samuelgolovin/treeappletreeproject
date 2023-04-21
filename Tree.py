@@ -51,37 +51,85 @@ class BinaryTree:
     
     def insert(self, p, l, q):
         if p is None:
-            return self._Node(l, q)
+            return self._Node(l, q, p)
         else:
             if  l < p._label:
                 p._left = self.insert(p._left, l, q)
             else:
                 p._right = self.insert(p._right, l, q)
             return p
+        
+    def insert1(self, p, l, q):
+        if not p:
+            print("\nmade a root")
+            return self.add_root(l, q)
+        elif p._left == None:
+            print("\nmade a left")
+            self.add_left(p, l, q)
+            return p
+        elif p._right == None:
+            print("\nmade a right")
+            self.add_right(p, l, q)
+            return p
+        else:
+            if p._left._left == None:
+                print("\nchanging to left child")
+                self.insert1(p._left, l, q)
+            elif p._left._right == None:
+                print("\nchanging to left child")
+                self.insert1(p._left, l, q)
+            elif p._right._left == None:
+                print("\nchanging to right child")
+                self.insert1(p._right, l, q)
+            elif p._right._right == None:
+                print("\nchanging to right child")
+                self.insert1(p._right, l, q)
 
-def inorderTraversal(root):
+ 
+
+def inorderTraversalApplePicker(root):
     res = []
     if root:
-        res = inorderTraversal(root._left)
+        latest_root = inorderTraversalApplePicker(root._left)
         res.append(root._label)
         res.append(root._quality)
-        res = res + inorderTraversal(root._right)
-    return res
+        latest_root = inorderTraversalApplePicker(root._right)
+    return res, latest_root
 
-def preorderTraversal(root):
-    res = []
-    if root:
-        res.append(root._label)
-        res.append(root._quality)
-        res = res + preorderTraversal(root._left)
-        res = res + preorderTraversal(root._right)
-    return res
+def return_deleted_node()
 
-def postorderTraversal(root):
-    res = []
-    if root:
-        res = preorderTraversal(root._left)
-        res = res + preorderTraversal(root._right)
-        res.append(root._label)
-        res.append(root._quality)
-    return res
+def delete_Node(root, key):
+    # if root doesn't exist, just return it
+    if not root: 
+        print("root because not existed")
+        return root
+    # Find the node in the left subtree	if key value is less than root value
+    if root._left and root._label > key: 
+        root._left = delete_Node(root._left, key)
+    # Find the node in right subtree if key value is greater than root value, 
+    elif root._right and root._label < key: 
+        root._right= delete_Node(root._right, key)
+    # Delete the node if root.value == key
+    else: 
+    # If there is no right children delete the node and new root would be root.left
+        if not root._right:
+            print("root._right")
+            return root._left
+    # If there is no left children delete the node and new root would be root.right	
+        if not root._left:
+            print("root._left")
+            return root._right
+    # If both left and right children exist in the node replace its value with 
+    # the minmimum value in the right subtree. Now delete that minimum node
+    # in the right subtree
+        temp_val = root._right
+        
+        mini_lab, mini_qua = temp_val._label, temp_val._quality
+
+        while temp_val._left:
+            temp_val = temp_val._left
+            mini_lab, mini_qua = temp_val._label, temp_val._quality
+
+    # Delete the minimum node in right subtree
+        root._right = delete_Node(root._right,root._label)
+    return root

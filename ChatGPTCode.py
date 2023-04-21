@@ -53,3 +53,6 @@ print("\nPreorder traversal of the binary tree:")
 preorder_traversal(root)
 print("\nPostorder traversal of the binary tree:")
 postorder_traversal(root)
+
+print(root.left.left)
+print(root.right)
